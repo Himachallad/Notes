@@ -1,5 +1,7 @@
 from tkinter import *
-import backend
+from backend import Database
+
+database = Database("books.db")
 
 def get_selected_row(event):
     try:
@@ -24,25 +26,25 @@ def get_selected_row(event):
         pass
 def view_command():
     list1.delete(0, END)
-    for row in backend.view():
+    for row in database.view():
         list1.insert(END, row)
 
 def search_command():
     list1.delete(0, END)
-    for row in backend.search(name_text.get(), type_text.get(), interest_text.get(), start_text.get(), end_text.get()):
+    for row in database.search(name_text.get(), type_text.get(), interest_text.get(), start_text.get(), end_text.get()):
         list1.insert(END, row)
 
 def add_command():
-    backend.insert(name_text.get(), type_text.get(), float(interest_text.get()), start_text.get(), end_text.get())
+    database.insert(name_text.get(), type_text.get(), float(interest_text.get()), start_text.get(), end_text.get())
     list1.delete(0, END)
     view_command()
 
 def delete_command():
-    backend.delete(selected_tuple[0])  
+    database.delete(selected_tuple[0])  
     view_command()     
 
 def update_command():
-    backend.update(selected_tuple[0], name_text.get(), type_text.get(), float(interest_text.get()), start_text.get(), end_text.get())
+    database.update(selected_tuple[0], name_text.get(), type_text.get(), float(interest_text.get()), start_text.get(), end_text.get())
     view_command()
 
 window = Tk()
